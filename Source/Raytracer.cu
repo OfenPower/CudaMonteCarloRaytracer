@@ -92,6 +92,7 @@ int main() {
 	printf("Raytracing finished!\n");
 
 	WriteResultsToFile();
+	FreeCUDAMemory();
 	
 	return 0;
 }
@@ -462,8 +463,6 @@ __host__ void WriteResultsToFile() {
 	else {
 		cudaMemcpy(hostColorMemory, cudaAttributes.deviceSamplePixelColorMemory, cudaAttributes.numResultPixelColors * sizeof(Color), cudaMemcpyDeviceToHost);
 	}
-
-	FreeCUDAMemory();
 
 	unsigned char* pixelData = new unsigned char[imageRenderingAttributes.width * imageRenderingAttributes.height * 3];	// there are 3 RGB values for each pixel, so the size is multiplied by 3
 	size_t colorIndex = 0;
